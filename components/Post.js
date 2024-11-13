@@ -1,15 +1,35 @@
 import React from 'react';
 
-const Post = () => {
+const getTagColor = (tag) => {
+    const tagColors = {
+        html: 'green',
+        css: 'pink',
+        js: 'yellow',
+        php: 'blue',
+    };
+    return tagColors[tag] || 'gray';
+};
+
+const Post = ({ title, image, content, tags, published }) => {
+    if (!published) return null;
+
+    const defaultImage = 'https://via.placeholder.com/600x400';
+
     return (
         <div className="card">
             <div className="card-content">
-                <h2 className="post-title">Titolo del Post</h2>
-                <p className="lorem-text">
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin quis velit nec augue varius aliquet. Sed euismod purus non dolor varius, a ultricies risus auctor. Quisque sollicitudin ligula et metus gravida, sed fermentum metus cursus.
-                </p>
+                <h2 className="post-title">{title}</h2>
+                <img src={image || defaultImage} alt={title} style={{ width: '100%', height: 'auto' }} />
+                <p className="lorem-text">{content}</p>
                 <div className="button-container">
                     <button className="read-more-btn">Leggi di più</button>
+                </div>
+                <div className="tags">
+                    {tags.map(tag => (
+                        <span key={tag} style={{ color: getTagColor(tag), marginRight: '8px' }}>
+                            #{tag}
+                        </span>
+                    ))}
                 </div>
             </div>
         </div>
@@ -17,3 +37,4 @@ const Post = () => {
 };
 
 export default Post;
+
